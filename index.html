@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#eef2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0e13" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="KORA">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="styles.css">
+<title>KORA — Personal Performance System</title>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <div class="brand">KORA<small>PERSONAL PERFORMANCE SYSTEM</small></div>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle appearance">◐</button>
+  </header>
+
+  <main>
+    <section class="screen active" data-screen="today">
+      <div class="eyebrow" id="todayEyebrow">TODAY</div>
+      <h1 class="headline">Ready when you are.</h1>
+      <div class="sub">Four lifting days by default. Three still counts as a successful week.</div>
+
+      <article class="glass hero">
+        <span class="badge"><i></i> NEXT · IRON 01</span>
+        <h2>Leg Day</h2>
+        <p class="sub">60s work / 30s recovery · timer-guided · reps + load logged per set</p>
+        <div class="metric-grid">
+          <div class="metric"><b id="calMetric">1,250</b><span>kcal remaining</span><div class="bar"><i style="width:32%"></i></div></div>
+          <div class="metric"><b id="proteinMetric">42 g</b><span>protein remaining</span><div class="bar"><i style="width:66%"></i></div></div>
+          <div class="metric"><b id="stepsMetric">3,840</b><span>steps today</span><div class="bar"><i id="stepsBar" style="width:48%"></i></div></div>
+          <div class="metric"><b>Normal</b><span>recovery status</span></div>
+        </div>
+        <button class="primary wide" id="startToday">START IRON 01</button>
+      </article>
+
+      <div class="section-title"><h3>This week</h3><span>Mon · Tue · Thu · Sat</span></div>
+      <div class="week" id="weekStrip"></div>
+
+      <article class="glass journey-cta" id="journeyCta">
+        <div><span class="eyebrow">JOURNEY</span><h3>Your world grows when you do.</h3><p>Training, movement and fueling reveal a permanent single-player world. Nothing decays if you disappear.</p></div>
+        <button class="secondary" data-go-journey>ENTER JOURNEY →</button>
+      </article>
+
+      <div class="section-title"><h3>Quick view</h3><span>adjustable later</span></div>
+      <div class="quick">
+        <div class="glass"><b>4</b><span>planned lifts</span></div>
+        <div class="glass"><b id="stepGoalQuick">8k</b><span>step goal</span></div>
+        <div class="glass"><b>125g</b><span>protein goal</span></div>
+        <div class="glass"><b>—</b><span>7-day weight avg</span></div>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="calendar">
+      <div class="eyebrow">CALENDAR</div><h1 class="headline">Flexible by design.</h1>
+      <p class="sub">Your default rhythm avoids Friday and Sunday. Rescheduling will eventually trigger recovery-aware suggestions.</p>
+      <article class="glass hero"><div id="calendarWeeks" class="stack"></div></article>
+    </section>
+
+    <section class="screen" data-screen="journey">
+      <div class="eyebrow">JOURNEY · PROTOTYPE REGION</div><h1 class="headline">The Glass March.</h1>
+      <p class="sub">Real-world consistency earns Growth. Growth reveals the world. Strategy wins fights. Nothing you earn can decay.</p>
+      <article class="game-hero">
+        <div class="avatar-stage"><div class="avatar-figure" id="avatarFigure" data-style="obsidian"><div class="avatar-aura"></div><div class="avatar-head"></div><div class="avatar-body"></div><div class="avatar-mantle"></div><div class="avatar-sigil"></div></div></div>
+        <div class="game-profile"><span class="eyebrow">TRAVELER</span><h2>Level <span id="gameLevel">1</span></h2><span id="equippedText">Origin attire</span><div class="game-xp"><i id="gameXpBar"></i></div><small id="gameXp">0 / 80 XP</small></div>
+      </article>
+      <div class="game-stats" id="gameStats"></div>
+      <div class="section-title"><h3>Today's Growth</h3><span>capped at healthy goals</span></div>
+      <div class="growth-actions"><button id="claim-workout">Training<span>+40 Growth</span></button><button id="claim-steps">Movement<span>+20 Growth</span></button><button id="claim-fuel">Fuel<span>+15 Growth</span></button></div>
+      <div class="game-note">Prototype only: these buttons simulate future automatic checks from your workout history, chosen step goal and nutrition target. Extra training, extra steps or eating below target will never farm extra Growth.</div>
+      <div class="section-title"><h3>Region</h3><span><b id="gameGrowth">0</b> Growth</span></div>
+      <article class="glass map-card"><svg id="journeyMap" viewBox="0 0 100 100" role="img" aria-label="The Glass March exploration map"></svg><div class="map-hint" id="journeyHint"></div></article>
+      <div class="section-title"><h3>Avatar style</h3><span>body never auto-changes</span></div>
+      <div class="style-choices"><button data-style-choice="obsidian" class="selected">Obsidian</button><button data-style-choice="ivory">Ivory</button><button data-style-choice="azure">Azure</button></div>
+      <div class="section-title"><h3>Archive</h3><span>permanent history</span></div><div id="artifactList" class="artifact-list"></div>
+      <button class="danger-btn wide" id="resetGame" style="margin-top:18px">RESET JOURNEY PROTOTYPE</button>
+    </section>
+
+    <section class="screen" data-screen="program">
+      <div class="eyebrow">PROGRAM</div><h1 class="headline">IRON · 30 workouts.</h1>
+      <p class="sub">Tap any workout to inspect its timer blocks and special rep patterns.</p>
+      <div class="program-list" id="programList"></div>
+    </section>
+
+    <section class="screen" data-screen="progress">
+      <div class="eyebrow">PROGRESS</div><h1 class="headline">Useful data, not paperwork.</h1>
+      <div class="stack">
+        <article class="glass hero"><h3 style="margin-top:0">Recent workouts</h3><div id="historyList" class="stack"></div></article>
+        <article class="glass hero"><h3 style="margin-top:0">Set-level progression</h3><div class="note">Every completed timed interval can store reps, kg used, load mode, difficulty and a note. This is the dataset the progression engine will use later.</div></article>
+      </div>
+    </section>
+
+    <section class="screen" data-screen="settings">
+      <div class="eyebrow">SETTINGS</div><h1 class="headline">Keep it low-friction.</h1>
+      <div class="stack">
+        <article class="glass hero">
+          <label class="eyebrow" for="stepGoal">Daily step goal</label>
+          <select id="stepGoal" style="margin:10px 0 18px;width:100%;min-height:48px;border-radius:14px;border:1px solid var(--line);background:var(--glass-strong);color:var(--text);padding:10px 12px;font-size:16px">
+            <option value="7000">7,000</option><option value="8000" selected>8,000</option><option value="9000">9,000</option><option value="10000">10,000</option>
+          </select>
+          <div class="note">Voice logging uses your iPhone browser's speech-recognition capability when available. No cloud AI is required for parsing “12 reps, 7 kilos, good.”</div>
+        </article>
+        <article class="glass hero"><h3 style="margin-top:0">Integrations</h3><div class="stack"><div class="note"><b>Apple Health / Yazio</b><br>Planned via a free Apple Shortcut bridge in the next integration milestone.</div><div class="note"><b>Garmin</b><br>Can later feed Apple Health, preserving the same import route.</div></div></article>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="bottom-nav" id="nav" aria-label="Main navigation">
+  <button class="active" data-go="today"><strong>⌂</strong>Today</button>
+  <button data-go="calendar"><strong>□</strong>Calendar</button>
+  <button data-go="journey"><strong>✦</strong>Journey</button>
+  <button data-go="program"><strong>≡</strong>Program</button>
+  <button data-go="progress"><strong>↗</strong>Progress</button>
+  <button data-go="settings"><strong>•••</strong>Settings</button>
+</nav>
+
+<section class="workout-shell hidden" id="workoutShell" aria-live="polite">
+ <div class="workout-inner" id="workoutActive">
+  <div class="workout-top">
+    <button class="icon-btn" id="exitWorkout" aria-label="Exit workout">×</button>
+    <div class="meta"><b id="workoutName">IRON 01 · Leg Day</b><span id="workoutBlock">Block 1 of 1</span></div>
+    <button class="icon-btn" id="openQueue" aria-label="Workout queue">≡</button>
+  </div>
+  <div class="progress"><i id="workoutProgress" style="width:0"></i></div>
+  <div id="phaseWrap">
+    <div class="phase" id="phaseLabel"><i></i><span id="phaseText">WORK</span></div>
+    <h1 class="exercise" id="exerciseName">Suitcase squat</h1>
+    <div class="exercise-sub" id="exerciseMeta">60 second timed set</div>
+    <div class="timer-area"><div class="timer-ring" id="timerRing"><div class="timer-value"><b id="timerValue">60</b><span>SECONDS</span></div></div></div>
+    <div class="pattern"><strong id="patternLabel">MOVEMENT</strong><span id="patternText">Controlled repetitions.</span></div>
+    <article class="glass load-card"><div><span>Suggested starting load</span><div class="kg" id="suggestedLoad">Calibration</div><span id="loadWhy">Use a controllable first set.</span></div><button id="editLoad">Edit</button></article>
+    <article class="glass cue-card"><b>Technique focus</b><p id="techniqueCue">Active range &gt; passive range.</p></article>
+    <div class="player-actions">
+      <button class="small" id="backSet">← Back</button><button class="play" id="pauseSet">PAUSE</button><button class="small" id="skipSet">Skip →</button>
+    </div>
+
+    <article class="glass log-panel hidden" id="logPanel">
+      <div class="log-head"><div><b>Log previous set</b><span id="logSetName">Set</span></div><span id="logStatus">Optional during rest</span></div>
+      <button class="voice" id="voiceBtn">🎙 <span>TAP & SAY “12 REPS, 7 KILOS, GOOD”</span></button>
+      <div class="transcript" id="transcript">Voice stays on-device/browser-managed where supported.</div>
+      <div class="fields">
+        <div class="field"><label for="repsInput">Reps</label><input id="repsInput" inputmode="numeric" type="number" min="0" max="100" placeholder="12"></div>
+        <div class="field"><label>Load</label><div class="weight-row"><input id="kgInput" inputmode="decimal" type="number" min="0" max="100" step="0.5" placeholder="7"><select id="loadMode"><option value="each">kg each</option><option value="single">kg single</option><option value="total">kg total</option><option value="bodyweight">bodyweight</option></select></div></div>
+      </div>
+      <div class="rating" id="ratingButtons"><button data-rating="Easy">Easy</button><button data-rating="Good">Good</button><button data-rating="Hard">Hard</button><button data-rating="Too hard">Too hard</button><button data-rating="Joint issue">Joint issue</button></div>
+      <div class="field"><label for="noteInput">Optional note</label><input id="noteInput" type="text" placeholder="e.g. low back started arching"></div>
+      <button class="primary wide save-log" id="saveLog">SAVE SET</button>
+      <div class="saved-toast" id="savedToast">✓ Set saved</div>
+    </article>
+
+    <div class="set-strip" id="setStrip" aria-label="Completed sets"></div>
+  </div>
+ </div>
+ <div class="workout-inner complete hidden" id="workoutComplete">
+   <div class="check">✓</div><h2>Workout complete.</h2><p class="sub" id="completeSummary">Session saved.</p>
+   <div class="review" id="reviewList"></div>
+   <button class="primary wide" id="finishWorkout">DONE</button>
+ </div>
+</section>
+
+<div class="sheet-backdrop hidden" id="sheetBackdrop"><div class="sheet"><div class="workout-top"><h3 id="sheetTitle">Workout</h3><button class="icon-btn" id="closeSheet">×</button></div><div id="sheetContent"></div></div></div>
+
+<div class="game-sheet hidden" id="gameSheet"><div class="game-sheet-panel"><div class="workout-top"><h3 id="gameSheetTitle">Journey</h3><button class="icon-btn" id="closeGameSheet">×</button></div><div id="gameSheetBody"></div></div></div>
+
+<section class="combat-shell hidden" id="combatShell">
+ <div class="combat-inner">
+  <div class="workout-top"><button class="icon-btn" id="combatClose">×</button><div class="meta"><b id="combatTitle">Encounter</b><span id="combatTurn">Turn 1</span></div><div style="width:44px"></div></div>
+  <div class="combat-scene"><div class="combat-avatar"><div class="mini-figure"></div><span>YOU</span></div><div class="versus">VS</div><div class="combat-enemy"><div class="enemy-orb boss"></div><span id="combatEnemyLabel">ENEMY</span></div></div>
+  <div class="combat-bars"><div><div><b>You</b><span id="playerHpText"></span></div><div class="hp"><i id="playerHpBar"></i></div></div><div><div><b>Enemy</b><span id="enemyHpText"></span></div><div class="hp enemy"><i id="enemyHpBar"></i></div></div></div>
+  <div class="combat-log" id="combatLog"></div>
+  <div class="combat-actions" id="combatActions"><button data-act="strike"><b>Strike</b><span>Reliable damage</span></button><button data-act="guard"><b>Guard</b><span>Reduce next hit</span></button><button data-act="focus"><b>Focus</b><span>Empower next strike</span></button><button data-act="surge"><b>Momentum</b><span>Scales with movement</span></button></div>
+  <div class="combat-result hidden" id="combatResult"></div>
+ </div>
+</section>
+
+<script src="iron-data.js"></script>
+<script src="app.js"></script>
+<script src="game.js"></script>
+</body></html>
